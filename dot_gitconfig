@@ -1,0 +1,31 @@
+[user]
+	email = hannes.hultergard@gmail.com
+	name = Hannes Hultergård
+	signingkey = /home/hannes/.ssh/id_ed25519.pub
+[pull]
+	rebase = true
+[init]
+	defaultBranch = master
+[commit]
+	gpgsign = true
+[push]
+	autoSetupRemote = true
+[safe]
+	directory = /opt/lampp/htdocs/burmond/wp-content/themes/burmond
+[core]
+	excludesfile = /home/hannes/.gitignore
+	editor = nvim
+[merge]
+	ff = no
+	commit = no
+[filter "lfs"]
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+[alias]
+	tree = log --graph --oneline --all --decorate
+[gpg]
+	format = ssh
+[gpg "ssh"]
+	allowedSignersFile = /home/hannes/.ssh/allowed_signers
