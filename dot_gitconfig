@@ -1,7 +1,7 @@
 [user]
 	email = hannes.hultergard@gmail.com
 	name = Hannes Hultergård
-	signingkey = /home/hannes/.ssh/id_ed25519.pub
+	signingkey = ~/.ssh/id_ed25519.pub
 [pull]
 	rebase = true
 [init]
