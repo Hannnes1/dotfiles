@@ -13,7 +13,7 @@
 [safe]
 	directory = /opt/lampp/htdocs/burmond/wp-content/themes/burmond
 [core]
-	excludesfile = /home/hannes/.gitignore
+	excludesfile = ~/.gitignore
 	editor = nvim
 [merge]
 	ff = no
