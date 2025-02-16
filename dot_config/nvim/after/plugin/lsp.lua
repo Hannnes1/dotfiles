@@ -2,59 +2,65 @@ if vim.g.vscode then
   return
 end
 
-local lsp_zero = require('lsp-zero')
-local luasnip = require('luasnip')
+-- Add cmp_nvim_lsp capabilities settings to lspconfig
+local lspconfig_defaults = require('lspconfig').util.default_config
+lspconfig_defaults.capabilities = vim.tbl_deep_extend(
+  'force',
+  lspconfig_defaults.capabilities,
+  require('cmp_nvim_lsp').default_capabilities()
+)
 
-lsp_zero.on_attach(function(client, bufnr)
-  local opts = { buffer = bufnr, remap = false }
+vim.api.nvim_create_autocmd('LspAttach', {
+  desc = 'LSP actions',
+  callback = function(event)
+    local opts = {buffer = event.buf}
 
-  vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
-  vim.keymap.set("n", "gi", function() vim.lsp.buf.implementation() end, opts)
-  vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
-  vim.keymap.set("n", "<leader>vws", function() vim.lsp.buf.workspace_symbol() end, opts)
-  vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.open_float() end, opts)
-  vim.keymap.set("n", "<leader>ca", function() vim.lsp.buf.code_action() end, opts)
-  vim.keymap.set("n", "<leader>vrr", function() vim.lsp.buf.references() end, opts)
-  vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
-  vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
-end)
+    vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+    vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+    vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+    vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
+    vim.keymap.set('n', 'go', vim.lsp.buf.type_definition, opts)
+    vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+    vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, opts)
+    vim.keymap.set('n', '<F2>', vim.lsp.buf.rename, opts)
+    vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
+    vim.keymap.set("n", "<leader>vrn", vim.lsp.buf.rename, opts)
+    vim.keymap.set("n", "<leader>vd", vim.diagnostic.open_float, opts)
+  end,
+})
 
--- to learn how to use mason.nvim with lsp-zero
--- read this: https://github.com/VonHeikemen/lsp-zero.nvim/blob/v3.x/doc/md/guides/integrate-with-mason-nvim.md
 require('mason').setup({})
 require('mason-lspconfig').setup({
   ensure_installed = { 'eslint', 'lua_ls', 'gopls', 'html', 'htmx', 'cssls', 'templ', 'tailwindcss' },
   handlers = {
-    lsp_zero.default_setup,
-    lua_ls = function()
-      local lua_opts = lsp_zero.nvim_lua_ls()
-      require('lspconfig').lua_ls.setup(lua_opts)
+    function(server_name)
+      require('lspconfig')[server_name].setup({})
+    end,
+
+    dartls = function()
+      require('lspconfig').dartls.setup({
+        settings = {
+          dart = {
+            lineLength = 120,
+          },
+        },
+      })
+    end,
+
+    denols = function()
+      require('lspconfig').denols.setup({
+        root_dir = require('lspconfig').util.root_pattern("deno.json", "deno.jsonc"),
+      })
+    end,
+
+    ts_ls = function()
+      require('lspconfig').ts_ls.setup({
+        root_dir = require('lspconfig').util.root_pattern("package.json"),
+        single_file_support = false
+      })
     end,
   }
 })
-
-local nvim_lsp = require('lspconfig')
-
-nvim_lsp.dartls.setup({
-  settings = {
-    dart = {
-      lineLength = 120,
-    },
-  },
-})
-
-nvim_lsp.denols.setup {
-  root_dir = nvim_lsp.util.root_pattern("deno.json", "deno.jsonc"),
-}
-
-nvim_lsp.ts_ls.setup {
-  root_dir = nvim_lsp.util.root_pattern("package.json"),
-  single_file_support = false
-}
-
-
-local cmp = require('cmp')
-local cmp_select = { behavior = cmp.SelectBehavior.Select }
 
 require('luasnip.loaders.from_vscode').lazy_load()
 require('luasnip.loaders.from_vscode').lazy_load({
@@ -63,6 +69,8 @@ require('luasnip.loaders.from_vscode').lazy_load({
   },
 })
 require('luasnip.loaders.from_vscode').load_standalone({ path = '~/.config/nvim/snippets/custom.json' })
+
+local luasnip = require('luasnip')
 
 vim.keymap.set({ "i", "s" }, "<C-L>", function() luasnip.jump(1) end, { silent = true })
 vim.keymap.set({ "i", "s" }, "<C-H>", function() luasnip.jump(-1) end, { silent = true })
@@ -73,6 +81,9 @@ vim.keymap.set({ "i", "s" }, "<C-E>", function()
   end
 end, { silent = true })
 
+local cmp = require('cmp')
+local cmp_select = { behavior = cmp.SelectBehavior.Select }
+
 cmp.setup({
   sources = {
     { name = 'path' },
@@ -81,7 +92,11 @@ cmp.setup({
     { name = 'luasnip', keyword_length = 2 },
     { name = 'buffer',  keyword_length = 3 },
   },
-  formatting = lsp_zero.cmp_format(),
+  snippet = {
+    expand = function(args)
+      vim.snippet.expand(args.body)
+    end,
+  },
   mapping = cmp.mapping.preset.insert({
     ['<C-k>'] = cmp.mapping.select_prev_item(cmp_select),
     ['<C-j>'] = cmp.mapping.select_next_item(cmp_select),

@@ -43,26 +43,26 @@ return require('packer').startup(function(use)
   }
 
   use {
-    'VonHeikemen/lsp-zero.nvim',
-    branch = 'v3.x',
-    requires = {
-      -- LSP Support
-      { "neovim/nvim-lspconfig" },
-      { "williamboman/mason.nvim" },
-      { "williamboman/mason-lspconfig.nvim" },
-
-      -- Autocompletion
-      { "hrsh7th/nvim-cmp" },
-      { "hrsh7th/cmp-buffer" },
-      { "hrsh7th/cmp-path" },
-      { "saadparwaiz1/cmp_luasnip" },
-      { "hrsh7th/cmp-nvim-lsp" },
-      { "hrsh7th/cmp-nvim-lua" },
-
-      -- Snippets
-      { "L3MON4D3/LuaSnip" },
-      { "rafamadriz/friendly-snippets" },
-    },
+    'neovim/nvim-lspconfig',
+    cond = no_vscode
+  }
+  use { 'hrsh7th/nvim-cmp',
+    cond = no_vscode
+  }
+  use {
+    'hrsh7th/cmp-nvim-lsp',
+    cond = no_vscode
+  }
+  use {
+    'williamboman/mason.nvim',
+    cond = no_vscode
+  }
+  use {
+    'williamboman/mason-lspconfig.nvim',
+    cond = no_vscode
+  }
+  use {
+    'L3MON4D3/LuaSnip',
     cond = no_vscode
   }
 
