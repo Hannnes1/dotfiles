@@ -44,19 +44,8 @@ if vim.g.vscode == nil then
   -- Map Ctrl-s to save.
   vim.keymap.set("n", "<C-s>", ":w<CR>")
 
-  -- Make it rain
-  vim.keymap.set("n", "<leader>mr", "<cmd>CellularAutomaton make_it_rain<CR>");
-
-  -- Make it rain
-  vim.keymap.set("n", "<leader>gl", "<cmd>CellularAutomaton game_of_life<CR>");
-
   -- Disable Q.
   vim.keymap.set("n", "Q", "<nop>")
-
-  -- Format current file.
-  vim.keymap.set("n", "<leader>f", function()
-    require("conform").format({ lsp_format = "prefer" })
-  end)
 end
 
 if vim.g.vscode ~= nil then
