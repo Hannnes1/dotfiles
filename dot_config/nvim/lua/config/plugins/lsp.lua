@@ -44,30 +44,25 @@ return {
           function(server_name)
             require('lspconfig')[server_name].setup({})
           end,
-
-          dartls = function()
-            require('lspconfig').dartls.setup({
-              settings = {
-                dart = {
-                  lineLength = 120,
-                },
-              },
-            })
-          end,
-
-          denols = function()
-            require('lspconfig').denols.setup({
-              root_dir = require('lspconfig').util.root_pattern("deno.json", "deno.jsonc"),
-            })
-          end,
-
-          ts_ls = function()
-            require('lspconfig').ts_ls.setup({
-              root_dir = require('lspconfig').util.root_pattern("package.json"),
-              single_file_support = false
-            })
-          end,
         }
+      })
+
+      require('lspconfig').dartls.setup({
+        settings = {
+          dart = {
+            lineLength = 120,
+          },
+        },
+      })
+
+
+      require('lspconfig').denols.setup({
+        root_dir = require('lspconfig').util.root_pattern("deno.json", "deno.jsonc"),
+      })
+
+      require('lspconfig').ts_ls.setup({
+        root_dir = require('lspconfig').util.root_pattern("package.json"),
+        single_file_support = false
       })
 
       require('luasnip.loaders.from_vscode').lazy_load()
