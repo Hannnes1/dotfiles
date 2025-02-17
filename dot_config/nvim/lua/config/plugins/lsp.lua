@@ -30,7 +30,6 @@ return {
           vim.keymap.set('n', 'go', vim.lsp.buf.type_definition, opts)
           vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
           vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, opts)
-          vim.keymap.set('n', '<F2>', vim.lsp.buf.rename, opts)
           vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
           vim.keymap.set("n", "<leader>vrn", vim.lsp.buf.rename, opts)
           vim.keymap.set("n", "<leader>vd", vim.diagnostic.open_float, opts)
