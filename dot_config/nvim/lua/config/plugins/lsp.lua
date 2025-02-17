@@ -1,5 +1,31 @@
 return {
   {
+    "L3MON4D3/LuaSnip",
+    build = "make install_jsregexp",
+    config = function()
+      require('luasnip.loaders.from_vscode').lazy_load()
+      require('luasnip.loaders.from_vscode').lazy_load({
+        paths = {
+          '~/.config/nvim/snippets/riverpod',
+        },
+      })
+      require('luasnip.loaders.from_vscode').load_standalone({
+        path = '~/.config/nvim/snippets/custom.json'
+      })
+
+      local luasnip = require('luasnip')
+
+      vim.keymap.set({ "i", "s" }, "<C-L>", function() luasnip.jump(1) end, { silent = true })
+      vim.keymap.set({ "i", "s" }, "<C-H>", function() luasnip.jump(-1) end, { silent = true })
+
+      vim.keymap.set({ "i", "s" }, "<C-E>", function()
+        if luasnip.choice_active() then
+          luasnip.change_choice(1)
+        end
+      end, { silent = true })
+    end,
+  },
+  {
     "neovim/nvim-lspconfig",
     enabled = not vim.g.vscode,
     dependencies = {
@@ -7,7 +33,6 @@ return {
       "williamboman/mason-lspconfig.nvim",
       "hrsh7th/nvim-cmp",
       "hrsh7th/cmp-nvim-lsp",
-      "L3MON4D3/LuaSnip",
       "nvim-treesitter/nvim-treesitter",
     },
     config = function()
@@ -64,25 +89,6 @@ return {
         single_file_support = false
       })
 
-      require('luasnip.loaders.from_vscode').lazy_load()
-      require('luasnip.loaders.from_vscode').lazy_load({
-        paths = {
-          '~/.config/nvim/snippets/riverpod',
-        },
-      })
-      require('luasnip.loaders.from_vscode').load_standalone({ path = '~/.config/nvim/snippets/custom.json' })
-
-      local luasnip = require('luasnip')
-
-      vim.keymap.set({ "i", "s" }, "<C-L>", function() luasnip.jump(1) end, { silent = true })
-      vim.keymap.set({ "i", "s" }, "<C-H>", function() luasnip.jump(-1) end, { silent = true })
-
-      vim.keymap.set({ "i", "s" }, "<C-E>", function()
-        if luasnip.choice_active() then
-          luasnip.change_choice(1)
-        end
-      end, { silent = true })
-
       local cmp = require('cmp')
       local cmp_select = { behavior = cmp.SelectBehavior.Select }
 
@@ -109,3 +115,4 @@ return {
     end,
   },
 }
+
