@@ -1,3 +1,4 @@
 .fvm
+.fvmrc
 .DS_Store
 flutter_jank_metrics*.json

@@ -29,3 +29,6 @@
 	format = ssh
 [gpg "ssh"]
 	allowedSignersFile = /home/hannes/.ssh/allowed_signers
+
+[url "git@github.com:"]
+    insteadOf = "https://github.com/"
