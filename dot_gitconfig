@@ -10,6 +10,7 @@
 	gpgsign = true
 [push]
 	autoSetupRemote = true
+	followTags = true
 [safe]
 	directory = /opt/lampp/htdocs/burmond/wp-content/themes/burmond
 [core]
