@@ -39,7 +39,9 @@ return {
 
       require('mason').setup({})
       require('mason-lspconfig').setup({
-        ensure_installed = { 'eslint', 'lua_ls', 'gopls', 'html', 'htmx', 'cssls', 'templ', 'tailwindcss' },
+        -- Disabled to avoid errors if any LSP is missing. I have left the code in place as a reminder
+        -- of which LSP I usually use.
+        -- ensure_installed = { 'eslint', 'lua_ls', 'gopls', 'html', 'htmx', 'cssls', 'templ', 'tailwindcss' },
         handlers = {
           function(server_name)
             require('lspconfig')[server_name].setup({})
