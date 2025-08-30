@@ -185,3 +185,8 @@ flutter () {
 dart () {
   puro dart "$@"
 }
+
+# Arch update alias (check uname)
+if uname -r | grep -q "arch"; then
+  alias update="yay -Pw && yay -Syu --sudoloop && flatpak update"
+fi
