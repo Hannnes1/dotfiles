@@ -129,10 +129,6 @@ export PATH="/Users/hannes/.pub-cache/bin:$PATH"
 export PATH=/Users/hannes/development/depot_tools:$PATH
 
 
-export LC_ALL="en_US.UTF-8"  
-export LANGUAGE="en_US.UTF-8"
-export LANG="en_US.UTF-8"
-
 # Mac specific settings
 if [[ "$OSTYPE" == "darwin"* ]]; then
   export JAVA_HOME=$(/usr/libexec/java_home)
@@ -189,4 +185,10 @@ dart () {
 # Arch update alias (check uname)
 if uname -r | grep -q "arch"; then
   alias update="yay -Pw && yay -Syu --sudoloop && flatpak update"
+fi
+
+# Start Plasma Wayland session if on tty1 and no other display server is running
+if [[ -z "$DISPLAY" ]] && [[ "$(tty)" == "/dev/tty1" ]] && ! pgrep -af "(^/usr/bin/X|kwin_wayland)" >/dev/null; then
+  # Command fetched from the Arch Wiki
+  exec /usr/lib/plasma-dbus-run-session-if-needed /usr/bin/startplasma-wayland
 fi
