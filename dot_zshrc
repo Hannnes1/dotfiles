@@ -101,6 +101,7 @@ source $ZSH/oh-my-zsh.sh
 # else
 #   export EDITOR='mvim'
 # fi
+export EDITOR='nvim'
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -132,11 +133,14 @@ export LC_ALL="en_US.UTF-8"
 export LANGUAGE="en_US.UTF-8"
 export LANG="en_US.UTF-8"
 
-export JAVA_HOME=$(/usr/libexec/java_home)
-
-export PATH=$PATH:/opt/
-
-export PATH=$PATH:~/Library/Android/sdk/platform-tools/
+# Mac specific settings
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  export JAVA_HOME=$(/usr/libexec/java_home)
+  
+  export PATH=$PATH:/opt/
+  
+  export PATH=$PATH:~/Library/Android/sdk/platform-tools/
+fi
 
 # Ignore duplicates in the history, and other cleanup.
 setopt HIST_EXPIRE_DUPS_FIRST
