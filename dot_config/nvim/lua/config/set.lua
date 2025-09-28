@@ -35,6 +35,12 @@ if vim.g.vscode == nil then
   vim.opt.colorcolumn = "80,120"
   vim.opt.textwidth = 120
 
+
+  vim.diagnostic.config({
+    -- virtual_lines = true
+    virtual_text = true
+  })
+
   -- Hot reload Flutter on save.
   -- vim.api.nvim_exec([[
   -- augroup DartAutoCmd

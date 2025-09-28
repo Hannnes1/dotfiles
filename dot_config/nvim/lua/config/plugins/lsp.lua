@@ -11,13 +11,6 @@ return {
       "nvim-treesitter/nvim-treesitter",
     },
     config = function()
-      local lspconfig_defaults = require('lspconfig').util.default_config
-      lspconfig_defaults.capabilities = vim.tbl_deep_extend(
-        'force',
-        lspconfig_defaults.capabilities,
-        require('cmp_nvim_lsp').default_capabilities()
-      )
-
       vim.api.nvim_create_autocmd('LspAttach', {
         desc = 'LSP actions',
         callback = function(event)
@@ -37,35 +30,38 @@ return {
         end,
       })
 
-      require('mason').setup({})
-      require('mason-lspconfig').setup({
-        -- Disabled to avoid errors if any LSP is missing. I have left the code in place as a reminder
-        -- of which LSP I usually use.
-        -- ensure_installed = { 'eslint', 'lua_ls', 'gopls', 'html', 'htmx', 'cssls', 'templ', 'tailwindcss' },
-        handlers = {
-          function(server_name)
-            require('lspconfig')[server_name].setup({})
-          end,
-        }
-      })
+      require('mason').setup()
+      require('mason-lspconfig').setup()
 
-      require('lspconfig').dartls.setup({
-        settings = {
-          dart = {
-            lineLength = 120,
+      local servers = {
+        dartls = {
+          settings = {
+            dart = {
+              lineLength = 120,
+            },
           },
         },
-      })
+        -- denols = {
+        --   root_markers = { "deno.json", "deno.jsonc" },
+        -- },
+        -- tsserver = {
+        --   root_markers = { "package.json" },
+        --   single_file_support = false
+        -- },
+      }
 
+      for server, config in pairs(servers) do
+        config = vim.tbl_deep_extend("force",
+          {},
+          {
+            capabilities = require('cmp_nvim_lsp').default_capabilities(),
+          },
+          config.capabilities or {}
+        )
+        vim.lsp.config(server, config)
+        vim.lsp.enable(server)
+      end
 
-      require('lspconfig').denols.setup({
-        root_dir = require('lspconfig').util.root_pattern("deno.json", "deno.jsonc"),
-      })
-
-      require('lspconfig').ts_ls.setup({
-        root_dir = require('lspconfig').util.root_pattern("package.json"),
-        single_file_support = false
-      })
 
       require('luasnip.loaders.from_vscode').lazy_load()
       require('luasnip.loaders.from_vscode').lazy_load({
