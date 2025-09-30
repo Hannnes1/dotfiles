@@ -3,11 +3,10 @@ return {
     "neovim/nvim-lspconfig",
     enabled = not vim.g.vscode,
     dependencies = {
-      "williamboman/mason.nvim",
-      "williamboman/mason-lspconfig.nvim",
       "hrsh7th/nvim-cmp",
       "hrsh7th/cmp-nvim-lsp",
       "L3MON4D3/LuaSnip",
+      'saadparwaiz1/cmp_luasnip',
       "nvim-treesitter/nvim-treesitter",
     },
     config = function()
@@ -30,9 +29,6 @@ return {
         end,
       })
 
-      require('mason').setup()
-      require('mason-lspconfig').setup()
-
       local servers = {
         dartls = {
           settings = {
@@ -41,23 +37,9 @@ return {
             },
           },
         },
-        -- denols = {
-        --   root_markers = { "deno.json", "deno.jsonc" },
-        -- },
-        -- tsserver = {
-        --   root_markers = { "package.json" },
-        --   single_file_support = false
-        -- },
       }
 
       for server, config in pairs(servers) do
-        config = vim.tbl_deep_extend("force",
-          {},
-          {
-            capabilities = require('cmp_nvim_lsp').default_capabilities(),
-          },
-          config.capabilities or {}
-        )
         vim.lsp.config(server, config)
         vim.lsp.enable(server)
       end
