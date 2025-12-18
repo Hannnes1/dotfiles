@@ -34,9 +34,13 @@ return {
           settings = {
             dart = {
               lineLength = 120,
+              analyzerLogFile = '/tmp/dart_analyzer.log',
             },
           },
         },
+        html = {},
+        cssls = {},
+        emmet_ls = {},
       }
 
       for server, config in pairs(servers) do
