@@ -136,6 +136,8 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   export PATH=$PATH:/opt/
   
   export PATH=$PATH:~/Library/Android/sdk/platform-tools/
+
+  export PATH=$PATH:/opt/homebrew/lib/ruby/gems/3.4.0/bin
 fi
 
 # Ignore duplicates in the history, and other cleanup.
