@@ -137,6 +137,15 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   
   export PATH=$PATH:~/Library/Android/sdk/platform-tools/
 
+  export CHROME_EXECUTABLE=/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome
+fi
+
+# Linux specific settings
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+  export CHROME_EXECUTABLE=/usr/bin/google-chrome-stable
+
+  export PATH="/opt/roslyn-ls/content/LanguageServer/linux-x64:$PATH"
+
   export PATH=$PATH:/opt/homebrew/lib/ruby/gems/3.4.0/bin
 fi
 
@@ -149,9 +158,6 @@ setopt HIST_FIND_NO_DUPS
 setopt HIST_SAVE_NO_DUPS
 export HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=true #Specific to plugin zsh-history-substring-search.
 
-
-# Env variable required for Flutter VS Code extension to find it.
-export CHROME_EXECUTABLE=/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome
 
 # Add CMake to path
 export PATH="/Users/hannes/Library/Android/sdk/cmake/3.22.1/bin:$PATH"
@@ -194,3 +200,5 @@ if [[ -z "$DISPLAY" ]] && [[ "$(tty)" == "/dev/tty1" ]] && ! pgrep -af "(^/usr/b
   # Command fetched from the Arch Wiki
   exec /usr/lib/plasma-dbus-run-session-if-needed /usr/bin/startplasma-wayland
 fi
+
+fpath+=~/.zfunc; autoload -Uz compinit; compinit
