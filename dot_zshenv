@@ -1,0 +1,12 @@
+export PATH="/opt/homebrew/bin:$PATH"
+export PATH="/opt/homebrew/sbin:$PATH"
+export HOMEBREW_PREFIX="$(brew --prefix)"
+
+export PATH="$PATH:$HOMEBREW_PREFIX/share/android-commandlinetools/platform-tools"
+export ANDROID_HOME="$HOMEBREW_PREFIX/share/android-commandlinetools"
+
+export DOCKER_HOST="unix://$HOME/.colima/default/docker.sock"
+
+if [ -f ~/.common-shell-env ]; then
+    . ~/.common-shell-env
+fi

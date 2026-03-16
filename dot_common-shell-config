@@ -1,0 +1,2 @@
+flutter(){ fvm flutter "$@" }
+dart(){ fvm dart "$@" }
