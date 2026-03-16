@@ -8,7 +8,6 @@ return {
       "L3MON4D3/LuaSnip",
       'saadparwaiz1/cmp_luasnip',
       "nvim-treesitter/nvim-treesitter",
-      "seblyng/roslyn.nvim",
     },
     config = function()
       vim.api.nvim_create_autocmd('LspAttach', {
@@ -31,21 +30,18 @@ return {
       })
 
       local servers = {
-        dartls = {
-          settings = {
-            dart = {
-              lineLength = 120,
-              analyzerLogFile = '/tmp/dart_analyzer.log',
-            },
-          },
-        },
+        -- dartls = {
+        --   settings = {
+        --     dart = {
+        --       lineLength = 120,
+        --       analyzerLogFile = '/tmp/dart_analyzer.log',
+        --     },
+        --   },
+        -- },
         html = {},
         cssls = {},
         emmet_ls = {},
         gopls = {},
-        -- Requires https://github.com/seblyng/roslyn.nvim.
-        -- The LSP server will have to be installed manually.
-        roslyn = {},
       }
 
       for server, config in pairs(servers) do
