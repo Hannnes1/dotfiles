@@ -48,4 +48,10 @@ if vim.g.vscode == nil then
   --   autocmd BufWritePost *.dart silent! !kill -SIGUSR1 $(pgrep -f "[f]lutter_tool.*run") > /dev/null 2>&1
   -- augroup END
   -- ]], false)
+
+  vim.filetype.add({
+    extension = {
+      arb = 'json',
+    },
+  })
 end

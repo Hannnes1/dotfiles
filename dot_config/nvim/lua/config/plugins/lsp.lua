@@ -42,6 +42,7 @@ return {
         cssls = {},
         emmet_ls = {},
         gopls = {},
+        jsonls = {},
       }
 
       for server, config in pairs(servers) do
