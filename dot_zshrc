@@ -182,14 +182,6 @@ export PATH=$PATH:$HOME/go/bin
 [[ -f /Users/hannes/.dart-cli-completion/zsh-config.zsh ]] && . /Users/hannes/.dart-cli-completion/zsh-config.zsh || true
 ## [/Completion]
 
-flutter () {
-  puro flutter "$@"
-}
-
-dart () {
-  puro dart "$@"
-}
-
 # Arch update alias (check uname)
 if uname -r | grep -q "arch"; then
   alias update="yay -Pw && yay -Syu --sudoloop && flatpak update"
