@@ -33,3 +33,6 @@
 
 [url "git@github.com:"]
     insteadOf = "https://github.com/"
+[mergetool "unityyamlmerge"]
+	trustExitCode = false
+  cmd = '/home/hannes/Unity/Hub/Editor/6000.3.5f1/Editor/Data/Tools/UnityYAMLMerge' merge -p "$BASE" "$REMOTE" "$LOCAL" "$MERGED"
