@@ -1,4 +1,5 @@
 vim.g.mapleader = " "
+vim.g.maplocalleader = ","
 
 -- Move selected lines.
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
@@ -46,6 +47,9 @@ if vim.g.vscode == nil then
 
   -- Disable Q.
   vim.keymap.set("n", "Q", "<nop>")
+
+  -- Disable , (reverse f/t repeat) since it's used as localleader.
+  vim.keymap.set("n", ",", "<nop>")
 end
 
 if vim.g.vscode ~= nil then
