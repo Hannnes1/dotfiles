@@ -1,9 +1,14 @@
 export PATH="/opt/homebrew/bin:$PATH"
 export PATH="/opt/homebrew/sbin:$PATH"
-export HOMEBREW_PREFIX="$(brew --prefix)"
 
-export PATH="$PATH:$HOMEBREW_PREFIX/share/android-commandlinetools/platform-tools"
-export ANDROID_HOME="$HOMEBREW_PREFIX/share/android-commandlinetools"
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  export HOMEBREW_PREFIX="$(brew --prefix)"
+  export ANDROID_HOME="$HOMEBREW_PREFIX/share/android-commandlinetools"
+else
+  export ANDROID_HOME="$HOME/Android/Sdk"
+fi
+
+export PATH="$PATH:$ANDROID_HOME/platform-tools:$ANDROID_HOME/cmdline-tools/latest/bin"
 
 export DOCKER_HOST="unix://$HOME/.colima/default/docker.sock"
 

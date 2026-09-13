@@ -194,3 +194,5 @@ if [[ -z "$DISPLAY" ]] && [[ "$(tty)" == "/dev/tty1" ]] && ! pgrep -af "(^/usr/b
 fi
 
 fpath+=~/.zfunc; autoload -Uz compinit; compinit
+
+export PATH="$HOME/.local/bin:$PATH"
