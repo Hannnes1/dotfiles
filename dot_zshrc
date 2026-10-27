@@ -137,6 +137,8 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   
   export PATH=$PATH:~/Library/Android/sdk/platform-tools/
 
+  export PATH="/opt/homebrew/lib/ruby/gems/4.0.0/bin:$PATH"
+
   export CHROME_EXECUTABLE=/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome
 fi
 
